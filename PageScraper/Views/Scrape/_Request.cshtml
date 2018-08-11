@@ -1,0 +1,29 @@
+﻿@model PageScraper.ViewModels.ScrapedResults
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+
+<div id="outerForm">
+    @using (Ajax.BeginForm("GetScrapedResults", "Scrape", new AjaxOptions { UpdateTargetId = "outerForm", InsertionMode = InsertionMode.Replace }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            @Html.ValidationMessageFor(model => model.RequestedUrl, "", new { @class = "text-danger" })
+            @Html.LabelFor(model => model.RequestedUrl)
+            @Html.TextBoxFor(model => model.RequestedUrl)
+            <button type="submit" class="button" id="reqButton">Get Page</button>
+        </div>
+    }
+
+    @if (!string.IsNullOrWhiteSpace(Model?.PageData?.Url))
+    {
+        <div id="results">
+            @Html.Partial("_Results", Model)
+        </div>
+    }
+
+</div>
+
+
+

@@ -1,0 +1,9 @@
+C:\d\playground\PageCrawler\WebpageGetter\WebpageGetter\bin\Debug\netstandard2.0\WebpageGetter.deps.json
+C:\d\playground\PageCrawler\WebpageGetter\WebpageGetter\bin\Debug\netstandard2.0\WebpageGetter.dll
+C:\d\playground\PageCrawler\WebpageGetter\WebpageGetter\bin\Debug\netstandard2.0\WebpageGetter.pdb
+C:\d\playground\PageCrawler\WebpageGetter\WebpageGetter\obj\Debug\netstandard2.0\WebpageGetter.csproj.CoreCompileInputs.cache
+C:\d\playground\PageCrawler\WebpageGetter\WebpageGetter\obj\Debug\netstandard2.0\WebpageGetter.AssemblyInfoInputs.cache
+C:\d\playground\PageCrawler\WebpageGetter\WebpageGetter\obj\Debug\netstandard2.0\WebpageGetter.AssemblyInfo.cs
+C:\d\playground\PageCrawler\WebpageGetter\WebpageGetter\obj\Debug\netstandard2.0\WebpageGetter.dll
+C:\d\playground\PageCrawler\WebpageGetter\WebpageGetter\obj\Debug\netstandard2.0\WebpageGetter.pdb
+C:\d\playground\PageCrawler\WebpageGetter\WebpageGetter\obj\Debug\netstandard2.0\WebpageGetter.csprojAssemblyReference.cache

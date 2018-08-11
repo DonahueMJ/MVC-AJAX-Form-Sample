@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "Page Scraper";
+}
+
+<div class="jumbotron">
+    <h1>Page Scrape</h1>
+    <p class="lead">Use this application to analyze the words and view images as a gallery from an external web url.</p>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>Getting started</h2>
+        <p>
+            Enter a page url to see it's statistics:
+        </p>
+        @Html.Action("_Request", "Scrape")
+    </div>
+</div>

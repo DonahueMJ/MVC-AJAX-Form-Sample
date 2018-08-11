@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2047
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PageScraper", "PageScraper\PageScraper.csproj", "{97CCFD03-20F8-408E-B379-B3B0872B9BA1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Foundation", "Foundation", "{49452DFC-DBAC-4501-BB2D-028738FD54DE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Project", "Project", "{AE90FE71-E0AB-4915-99A6-B324D7286938}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{19A761D9-F1FD-42E9-9618-F681A982319C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebpageGetter", "WebpageGetter\WebpageGetter\WebpageGetter.csproj", "{14FDD7CF-7477-4FB5-B06D-B26CA95F4E23}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{97CCFD03-20F8-408E-B379-B3B0872B9BA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97CCFD03-20F8-408E-B379-B3B0872B9BA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97CCFD03-20F8-408E-B379-B3B0872B9BA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97CCFD03-20F8-408E-B379-B3B0872B9BA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14FDD7CF-7477-4FB5-B06D-B26CA95F4E23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14FDD7CF-7477-4FB5-B06D-B26CA95F4E23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14FDD7CF-7477-4FB5-B06D-B26CA95F4E23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14FDD7CF-7477-4FB5-B06D-B26CA95F4E23}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{97CCFD03-20F8-408E-B379-B3B0872B9BA1} = {AE90FE71-E0AB-4915-99A6-B324D7286938}
+		{19A761D9-F1FD-42E9-9618-F681A982319C} = {49452DFC-DBAC-4501-BB2D-028738FD54DE}
+		{14FDD7CF-7477-4FB5-B06D-B26CA95F4E23} = {19A761D9-F1FD-42E9-9618-F681A982319C}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {141E2111-3567-4572-ADF7-DE2EABB9E627}
+	EndGlobalSection
+EndGlobal
