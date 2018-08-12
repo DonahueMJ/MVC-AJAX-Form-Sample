@@ -2,4 +2,32 @@
 
 <h2>Page Statistics</h2>
 
+<ul>
+    <li>Total Page Words: @Model.WordCount</li>
+    <li>Top @Constants.GeneralSettings.TopWordResultQty Words: 
+        <ul>
+            @foreach (var word in Model.WordStats)
+            {
+                <li>@word.Name appeared @word.Count times</li>
+            }
+        </ul>
+        
+    </li>
+    <li>
+        Image References:
+        <ul>
+            @foreach (var image in Model.Images)
+            {
+                <li>
+                    <ul>
+                        <li>url: @image.Url</li>
+                        <li>title: @image.Title</li>
+                    </ul>
+                </li>
+            }
+        </ul>
+
+    </li>
+</ul>
+
 <p>insert stuff here. Use Model to build chart and data.</p>

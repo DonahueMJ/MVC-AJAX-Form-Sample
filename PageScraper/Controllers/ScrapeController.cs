@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using WebpageGetter;
 
 namespace PageScraper.Controllers
 {
@@ -26,7 +25,7 @@ namespace PageScraper.Controllers
             {
                 var pb = new PageBuilder();
 
-                var model = pb.GetDataFromUrl(request.RequestedUrl);
+                var model = pb.GetDataFromUrl(request.PageUrl);
 
                 return PartialView("_Request", model);
             }

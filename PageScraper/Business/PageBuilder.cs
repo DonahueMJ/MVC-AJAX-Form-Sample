@@ -1,11 +1,12 @@
-﻿using PageScraper.Models;
+﻿using HtmlAgilityPack;
+using PageScraper.Models;
 using PageScraper.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Text.RegularExpressions;
 using System.Web;
-using WebpageGetter;
-using WebpageGetter.Models;
 
 namespace PageScraper.Business
 {
@@ -13,37 +14,95 @@ namespace PageScraper.Business
     {
         public ScrapedResults GetDataFromUrl(string url)
         {
-            var manager = new RequestManager();
+            var results = new ScrapedResults();
 
-            var page = manager.GetPage(url);
-
-            var results = new ScrapedResults
+            try
             {
-                Images = getImages(page),
-                WordStats = getWordStats(page),
-                PageData = getPageData(page)
-            };
+                using (WebClient webClient = new WebClient())
+                {
+                    string source = webClient.DownloadString(url);
+
+                    HtmlDocument document = new HtmlDocument();
+                    document.LoadHtml(source);
+
+                    var wordStats = getWordStats(document);
+                    var wordCount = wordStats.Sum(stat => stat.Count);
+
+                    results.PageUrl = url;
+                    results.Images = getImages(document);
+                    results.WordStats = wordStats.OrderByDescending(w => w.Count).Take(Constants.GeneralSettings.TopWordResultQty);
+                    results.Source = source;
+                    results.WordCount = wordCount;
+                }
+            }
+            catch(Exception ex)
+            {
+                var message = ex.Message;
+                results.ErrorMessage = Constants.GeneralSettings.ScraperErrorMessage;
+                //TODO:IncorporateLogging
+            }
+            
 
             return results;
         }
 
-
-        private Page getPageData(Page page)
+        private IEnumerable<Image> getImages(HtmlDocument pageSource)
         {
-            page.Url = "http://www.test.com";
+            var images = pageSource.DocumentNode.Descendants("img")
+                                .Select(e => new Image { Url = e.GetAttributeValue("src", null), Title = e.GetAttributeValue("alt", null) })
+                                .Where(s => !String.IsNullOrEmpty(s.Url));
 
-            return page;
+            return images;
+
         }
 
-        private List<Image> getImages(Page page)
+
+        private IEnumerable<WordStat> getWordStats(HtmlDocument pageSource)
         {
-            return new List<Image>();
+            var words = getWords(pageSource)
+                .Split(' ')
+                .GroupBy(x => x)
+                .Select(x => new WordStat
+                {
+                    Name = x.Key,
+                    Count = x.Count()
+                });
+
+            return words;
+
         }
 
-        private List<WordStat> getWordStats(Page page)
+        private string getWords(HtmlDocument pageSource)
         {
-            return new List<WordStat>();
+            var root = pageSource.DocumentNode;
+            string content = "";
+            foreach (var node in root.SelectNodes("//text()"))
+            {
+                if (!node.HasChildNodes)
+                {
+                    string text = node.InnerText;
+                    if (!string.IsNullOrEmpty(text))
+                        content += text.Trim() + " ";
+                }
+            }
+
+            return cleanString(content.Trim());
         }
+
+        private string cleanString(string content)
+        {
+            //clean opening html tags and closing html tags seperately maybe?
+            //keep spaces
+
+
+            //characters
+            //content = Regex.Replace(content, @"[^a-zA-Z0-9_.]+", "");
+            //remaining tags, mostly scripts and css
+            //content = Regex.Replace(content, @"<[^>]*>", "");
+
+            return content;
+        }
+
     }
 
 }

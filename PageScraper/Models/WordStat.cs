@@ -7,7 +7,7 @@ namespace PageScraper.Models
 {
     public class WordStat
     {
-        public string name { get; set; }
-        public int count { get; set; }
+        public string Name { get; set; }
+        public int Count { get; set; }
     }
 }

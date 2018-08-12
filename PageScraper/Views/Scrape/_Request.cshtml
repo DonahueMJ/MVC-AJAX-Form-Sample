@@ -9,17 +9,24 @@
     {
         @Html.AntiForgeryToken()
         <div class="row">
-            @Html.ValidationMessageFor(model => model.RequestedUrl, "", new { @class = "text-danger" })
-            @Html.LabelFor(model => model.RequestedUrl)
-            @Html.TextBoxFor(model => model.RequestedUrl)
+            @Html.ValidationMessageFor(model => model.PageUrl, "", new { @class = "text-danger" })
+            @Html.LabelFor(model => model.PageUrl)
+            @Html.TextBoxFor(model => model.PageUrl)
             <button type="submit" class="button" id="reqButton">Get Page</button>
         </div>
     }
 
-    @if (!string.IsNullOrWhiteSpace(Model?.PageData?.Url))
+    @if (!string.IsNullOrWhiteSpace(Model?.Source))
     {
         <div id="results">
             @Html.Partial("_Results", Model)
+        </div>
+    }
+
+    @if (!string.IsNullOrWhiteSpace(Model?.ErrorMessage))
+    {
+        <div id="results" class="warning">
+            <p class="text-danger">@Model.ErrorMessage</p>
         </div>
     }
 
