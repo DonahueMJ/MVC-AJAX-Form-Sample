@@ -24,13 +24,13 @@ namespace PageScraper.Business
 
                     HtmlDocument document = new HtmlDocument();
                     document.LoadHtml(source);
-
+                    results.Images = getImages(document);
                     var wordStats = getWordStats(document);
                     var wordCount = wordStats.Sum(stat => stat.Count);
 
                     results.PageUrl = url;
-                    results.Images = getImages(document);
-                    results.WordStats = wordStats.OrderByDescending(w => w.Count).Take(Constants.GeneralSettings.TopWordResultQty);
+                    
+                    results.WordStats = wordStats.OrderByDescending(w => w.Count).Take(Constants.GeneralSettings.TopWordResultQty).ToList();
                     results.Source = source;
                     results.WordCount = wordCount;
                 }
@@ -46,18 +46,18 @@ namespace PageScraper.Business
             return results;
         }
 
-        private IEnumerable<Image> getImages(HtmlDocument pageSource)
+        private List<Image> getImages(HtmlDocument pageSource)
         {
             var images = pageSource.DocumentNode.Descendants("img")
                                 .Select(e => new Image { Url = e.GetAttributeValue("src", null), Title = e.GetAttributeValue("alt", null) })
-                                .Where(s => !String.IsNullOrEmpty(s.Url));
+                                .Where(s => !String.IsNullOrEmpty(s.Url)).ToList();
 
             return images;
 
         }
 
 
-        private IEnumerable<WordStat> getWordStats(HtmlDocument pageSource)
+        private List<WordStat> getWordStats(HtmlDocument pageSource)
         {
             var words = getWords(pageSource)
                 .Split(' ')
@@ -66,7 +66,7 @@ namespace PageScraper.Business
                 {
                     Name = x.Key,
                     Count = x.Count()
-                });
+                }).ToList();
 
             return words;
 
@@ -74,21 +74,53 @@ namespace PageScraper.Business
 
         private string getWords(HtmlDocument pageSource)
         {
-            var root = pageSource.DocumentNode;
-            string content = "";
-            foreach (var node in root.SelectNodes("//text()"))
-            {
-                if (!node.HasChildNodes)
-                {
-                    string text = node.InnerText;
-                    if (!string.IsNullOrEmpty(text))
-                        content += text.Trim() + " ";
-                }
-            }
+           
+            string content = cleanSource(pageSource);
 
-            return cleanString(content.Trim());
+            return cleanString(content.Trim().ToLower());
         }
 
+        private string cleanSource(HtmlDocument pageSource)
+        {
+            var content = string.Empty;
+            try
+            {
+                var imgs = pageSource.DocumentNode.SelectNodes("//img");
+                foreach (var img in imgs)
+                {
+                    img.Remove();
+                }
+
+                content = pageSource.DocumentNode.OuterHtml;
+
+                //clean opening html tags
+                //Remove CSS styles, if any found
+                content = Regex.Replace(content, "<style(.| )*?>*</style>", "");
+                //Remove script blocks
+                content = Regex.Replace(content, @"<script[^>]*>[\s\S]*?</script>", "");
+                // Remove all images
+                // Remove all HTML tags, leaving on the text inside.
+                content = Regex.Replace(content, "<(.| )*?>", "");
+                content = Regex.Replace(content, "&amp;", "");
+                content = Regex.Replace(content, @"[^a-zA-Z\s]+", "");
+                // Remove all extra spaces, tabs and repeated line-breaks
+                content = Regex.Replace(content, "(x09)?", "");
+                content = Regex.Replace(content, "(x20){2,}", " ");
+                content = Regex.Replace(content, "(x0Dx0A)+", " ");
+                content = Regex.Replace(content, @"\s+", " ");
+
+            }
+            catch(Exception ex)
+            {
+                var text = ex.Message;
+                //log ex
+                throw;
+            }
+            
+            
+
+            return content;
+        }
         private string cleanString(string content)
         {
             //clean opening html tags and closing html tags seperately maybe?

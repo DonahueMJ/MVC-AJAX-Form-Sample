@@ -3,40 +3,75 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>Page Scraper</title>
+    <link href="/assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css" rel="stylesheet">
+
+
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
+    <header>
+        <div class="collapse bg-dark" id="navbarHeader">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-8 col-md-7 py-4">
+                        <h4 class="text-white">About</h4>
+                        <p class="text-muted">
+                            This is a small user friendly program that allows the user to type a URL for a given website page and the program will then do the following:
+
+                            List all images and show them to the user appropriately in a carousel or gallery control of some kind (borrow from the internet or write your own)
+                            Count all the words (display the total) and display the top 10 occurring words and their count.
+                        </p>
+                    </div>
+                    <div class="col-sm-4 offset-md-1 py-4">
+                        <h4 class="text-white">Contact</h4>
+                        <ul class="list-unstyled">
+                            <li><a href="mailto:mike.j.donahue@gmail.com" class="text-white">Email me</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
+        <div class="navbar navbar-dark bg-dark shadow-sm">
+            <div class="container d-flex justify-content-between">
+                <a href="#" class="navbar-brand d-flex align-items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                    <strong>PageScraper</strong>
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+    <main role="main">
+
+            @RenderBody()
+       <hr />
+    </main>
+    <footer>
+        <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+    </footer>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/ekkolightbox.min.js"></script>
     @RenderSection("scripts", required: false)
+
+    <script>
+
+        $(document).on('click', '[data-toggle="lightbox"]', function (event) {
+            event.preventDefault();
+            $(this).ekkoLightbox();
+        });
+
+    </script>
 </body>
 </html>

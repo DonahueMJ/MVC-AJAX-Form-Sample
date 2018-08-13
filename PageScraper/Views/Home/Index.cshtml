@@ -2,17 +2,20 @@
     ViewBag.Title = "Page Scraper";
 }
 
-<div class="jumbotron">
-    <h1>Page Scrape</h1>
-    <p class="lead">Use this application to analyze the words and view images as a gallery from an external web url.</p>
-</div>
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">Page Scrape</h1>
+        <p class="lead text-muted">Use this application to analyze the words and view images as a gallery from an external web url.</p>
 
-<div class="row">
-    <div class="col-md-12">
-        <h2>Getting started</h2>
-        <p>
-            Enter a page url to see it's statistics:
-        </p>
-        @Html.Action("_Request", "Scrape")
     </div>
-</div>
+</section>
+
+@Html.Action("_Request", "Scrape")
+
+
+
+@section scripts {
+
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+            }

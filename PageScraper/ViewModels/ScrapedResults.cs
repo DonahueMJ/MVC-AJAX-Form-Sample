@@ -9,8 +9,8 @@ namespace PageScraper.ViewModels
     [MetadataType(typeof(PageMetadata))]
     public class ScrapedResults : Page
     {
-        public IEnumerable<Image> Images { get; set; }
-        public IEnumerable<WordStat> WordStats { get; set; }
+        public List<Image> Images { get; set; }
+        public List<WordStat> WordStats { get; set; }
         public string ErrorMessage { get; set; }
         public int WordCount { get; set; }
     }

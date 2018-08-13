@@ -1,36 +1,48 @@
 ﻿@model PageScraper.ViewModels.ScrapedResults
-<script src="~/Scripts/jquery-3.3.1.min.js"></script>
-<script src="~/Scripts/jquery.validate.min.js"></script>
-<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+
 
 
 <div id="outerForm">
-    @using (Ajax.BeginForm("GetScrapedResults", "Scrape", new AjaxOptions { UpdateTargetId = "outerForm", InsertionMode = InsertionMode.Replace }))
-    {
-        @Html.AntiForgeryToken()
-        <div class="row">
-            @Html.ValidationMessageFor(model => model.PageUrl, "", new { @class = "text-danger" })
-            @Html.LabelFor(model => model.PageUrl)
-            @Html.TextBoxFor(model => model.PageUrl)
-            <button type="submit" class="button" id="reqButton">Get Page</button>
+    <section>
+        <div class="album py-5 bg-light">
+            <div class="container">
+                @using (Ajax.BeginForm("GetScrapedResults", "Scrape", new AjaxOptions { UpdateTargetId = "outerForm", InsertionMode = InsertionMode.Replace }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="row">
+                        @Html.ValidationMessageFor(model => model.PageUrl, "", new { @class = "text-danger" })
+                        @Html.LabelFor(model => model.PageUrl)
+                        @Html.TextBoxFor(model => model.PageUrl)
+                        <button type="submit" class="button" id="reqButton">Get Page</button>
+                    </div>
+
+                    if (!string.IsNullOrWhiteSpace(Model?.ErrorMessage))
+                    {
+                        <div id="results" class="warning">
+                            <p class="text-danger">@Model.ErrorMessage</p>
+                        </div>
+                    }
+                }
+            </div>
         </div>
-    }
+    </section>
+    
 
     @if (!string.IsNullOrWhiteSpace(Model?.Source))
     {
-        <div id="results">
-            @Html.Partial("_Results", Model)
-        </div>
+
+        
+                @Html.Partial("_Results", Model)
+
+
+
+        
     }
 
-    @if (!string.IsNullOrWhiteSpace(Model?.ErrorMessage))
-    {
-        <div id="results" class="warning">
-            <p class="text-danger">@Model.ErrorMessage</p>
-        </div>
-    }
+    
+
 
 </div>
-
 
 
