@@ -51,8 +51,8 @@ namespace PageScraper.Business
         private List<Image> getImages(HtmlDocument pageSource, WebClient client, Uri requestUri)
         {
             var images = pageSource.DocumentNode.Descendants("img")
-                                .Select(e => SetImageProperties(e, client, requestUri))
-                                .Where(s => !String.IsNullOrEmpty(s.Url)).ToList();
+                                .Select(i => SetImageProperties(i, client, requestUri))
+                                .Where(i => !String.IsNullOrEmpty(i?.Url)).ToList();
 
             return images;
 
@@ -62,24 +62,26 @@ namespace PageScraper.Business
         {
             var imagePath = image.GetAttributeValue("src", null);
             var imageUrl = string.Empty;
-            if (imagePath != null)
+            if (!string.IsNullOrWhiteSpace(imagePath))
             {
                 imageUrl = (imagePath.StartsWith("/") && !imagePath.StartsWith("//")) ? requestUri.GetLeftPart(UriPartial.Authority) + imagePath : imagePath;
-            }
-            
-            byte[] imageData = client.DownloadData(imageUrl);
-            MemoryStream imgStream = new MemoryStream(imageData);
-            System.Drawing.Image img = System.Drawing.Image.FromStream(imgStream);
+                imageUrl = imagePath.StartsWith("//") ? requestUri.Scheme + ":" + imageUrl : imageUrl;
+                byte[] imageData = client.DownloadData(imageUrl);
+                MemoryStream imgStream = new MemoryStream(imageData);
+                System.Drawing.Image img = System.Drawing.Image.FromStream(imgStream);
 
-            int wSize = img.Width;
-            int hSize = img.Height;
-            return new Image
-            {
-                Url = imageUrl,
-                Title = image.GetAttributeValue("alt", null),
-                height = hSize,
-                width = wSize
-            };
+                int wSize = img.Width;
+                int hSize = img.Height;
+                return new Image
+                {
+                    Url = imageUrl,
+                    Title = image.GetAttributeValue("alt", null),
+                    height = hSize,
+                    width = wSize
+                };
+            }
+
+            return null;
         }
 
 
@@ -100,35 +102,46 @@ namespace PageScraper.Business
 
         private string getWords(HtmlDocument pageSource)
         {
-           
-            string content = cleanSource(pageSource);
-
-            return cleanString(content.Trim().ToLower());
-        }
-
-        private string cleanSource(HtmlDocument pageSource)
-        {
             var content = string.Empty;
             try
             {
                 var imgs = pageSource.DocumentNode.SelectNodes("//img");
-                foreach (var img in imgs)
+                if(imgs != null)
                 {
-                    img.Remove();
+                    foreach (var img in imgs)
+                    {
+                        img.Remove();
+                    }
                 }
 
-                var styles = pageSource.DocumentNode.SelectNodes("//link");
-                foreach (var style in styles)
+                var styleLinks = pageSource.DocumentNode.SelectNodes("//link");
+                if(styleLinks!=null)
                 {
-                    style.Remove();
+                    foreach (var style in styleLinks)
+                    {
+                        style.Remove();
+                    }
                 }
 
                 var scripts = pageSource.DocumentNode.SelectNodes("//script");
-                foreach (var script in scripts)
+                if (scripts != null)
                 {
-                    script.Remove();
+                    foreach (var script in scripts)
+                    {
+                        script.Remove();
+                    }
                 }
+                
 
+                var styles = pageSource.DocumentNode.SelectNodes("//style");
+                if(styles!=null)
+                {
+                    foreach (var style in styles)
+                    {
+                        style.Remove();
+                    }
+                }
+                
                 content = pageSource.DocumentNode.OuterHtml;
 
                 // Remove all HTML tags, leaving on the text inside.
@@ -141,31 +154,15 @@ namespace PageScraper.Business
                 content = Regex.Replace(content, "(x20){2,}", " ");
                 content = Regex.Replace(content, "(x0Dx0A)+", " ");
                 content = Regex.Replace(content, @"\s+", " ");
-
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var text = ex.Message;
                 //log ex
                 throw;
             }
-            
-            
 
-            return content;
-        }
-        private string cleanString(string content)
-        {
-            //clean opening html tags and closing html tags seperately maybe?
-            //keep spaces
-
-
-            //characters
-            //content = Regex.Replace(content, @"[^a-zA-Z0-9_.]+", "");
-            //remaining tags, mostly scripts and css
-            //content = Regex.Replace(content, @"<[^>]*>", "");
-
-            return content;
+            return content.Trim().ToLower();
         }
 
     }
