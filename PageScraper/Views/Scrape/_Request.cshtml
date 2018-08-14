@@ -7,24 +7,35 @@
     <section>
         <div class="album py-5 bg-light">
             <div class="container">
-                @using (Ajax.BeginForm("GetScrapedResults", "Scrape", new AjaxOptions { UpdateTargetId = "outerForm", InsertionMode = InsertionMode.Replace }))
+
+
+
+                @using (Ajax.BeginForm("GetScrapedResults", "Scrape", new AjaxOptions { UpdateTargetId = "outerForm", InsertionMode = InsertionMode.Replace, OnSuccess = "LoadSwipe", LoadingElementId = "loading", OnBegin = "onSubmitBegin" }))
                 {
                     @Html.AntiForgeryToken()
-                    <div class="row">
+                    <div class="warning">
                         @Html.ValidationMessageFor(model => model.PageUrl, "", new { @class = "text-danger" })
-                        @Html.LabelFor(model => model.PageUrl)
-                        @Html.TextBoxFor(model => model.PageUrl)
-                        <button type="submit" class="button" id="reqButton">Get Page</button>
                     </div>
+                    <div class="input-group">
 
+                        @Html.LabelFor(model => model.PageUrl, new { @class = "input-group col-1 form-text" })
+                        @Html.TextBoxFor(model => model.PageUrl, new { @class = "form-control" })
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-dark" id="reqButton">Get Page</button>
+                        </span>
+
+                    </div>
                     if (!string.IsNullOrWhiteSpace(Model?.ErrorMessage))
                     {
-                        <div id="results" class="warning">
+                        <div class="warning">
                             <p class="text-danger">@Model.ErrorMessage</p>
                         </div>
                     }
                 }
             </div>
+        </div>
+        <div id="loading">
+            <img src="~/Content/ajax-spinner.gif" />
         </div>
     </section>
     

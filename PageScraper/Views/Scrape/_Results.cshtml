@@ -33,64 +33,69 @@
 
             </div>
         </div>
-        </div>
+    </div>
 </section>
 <section class="jumbotron text-center bg-light">
 
     <h2>Scraped images</h2>
 
+                <!-- Galley wrapper that contains all items -->
+                <div id="gallery" class="gallery" itemscope itemtype="http://schema.org/ImageGallery">
+                    <div class="row">
+                        @foreach (var image in Model.Images)
+                        {
+                            if (imageCounter != 0 && imageCounter % 3 == 0)
+                            {
+                            @:</div>
+                            @:<div class="row">
+                            }
 
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="row">
-                @foreach (var image in Model.Images)
-                {
-                    if (imageCounter != 0 && imageCounter % 3 == 0)
-                    {
-                    @:</div>
-                    @:<div class="row">
-                    }
-                    <div class="col-md-4">
-                        <div class="card mb-4 shadow-sm">
-                            <a href="@image.Url" title="@image.Title" data-toggle="lightbox" data-gallery="example-gallery">
-                                <img src="@image.Url" alt="@image.Title" class="img-fluid">
-                            </a>
-                        </div>
+
+                            <div class="col-md-4">
+                                <div class="card mb-4 shadow-sm">
+                                    <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" data-index="@imageCounter">
+                                        <!-- Link to the big image, not mandatory, but usefull when there is no JS -->
+                                        <a href="@image.Url" data-caption="@image.Title" data-width="@image.width" data-height="@image.height" itemprop="contentUrl">
+                                            <!-- Thumbnail -->
+                                            <img src="@image.Url" itemprop="thumbnail" alt="@image.Title" class="img-fluid align-middle">
+                                        </a>
+                                    </figure>
+                                </div>
+                            </div>
+                            imageCounter++;
+                        }
+
                     </div>
-                    imageCounter++;
-                }
+                </div>
 
+    <!-- Some spacing 😉 -->
+    <div class="spacer"></div>
+    @*<div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="row">
+                    @foreach (var image in Model.Images)
+                    {
+                        if (imageCounter != 0 && imageCounter % 3 == 0)
+                        {
+                        @:</div>
+                        @:<div class="row">
+                        }
+
+                        var imageUrl = (image.Url.StartsWith("/") && !image.Url.StartsWith("//")) ? Model.Uri.GetLeftPart(UriPartial.Authority) + image.Url : image.Url;
+                        <div class="col-md-4">
+                            <div class="card mb-4 shadow-sm">
+                                <a href="@imageUrl" title="@image.Title" data-toggle="lightbox" data-gallery="scraped-gallery">
+                                    <img src="@imageUrl" alt="@image.Title" class="img-fluid">
+                                </a>
+                            </div>
+                        </div>
+                        imageCounter++;
+                    }
+
+                </div>
             </div>
-        </div>
-    </div>
+        </div>*@
 </section>
-
-<!--div class="row justify-content-center">
-    <div class="col-md-8">
-        <div class="row">
-            <a href="https://unsplash.it/1200/768.jpg?image=251" data-toggle="lightbox" data-gallery="example-gallery" class="col-sm-4">
-                <img src="https://unsplash.it/600.jpg?image=251" class="img-fluid">
-            </a>
-            <a href="https://unsplash.it/1200/768.jpg?image=252" data-toggle="lightbox" data-gallery="example-gallery" class="col-sm-4">
-                <img src="https://unsplash.it/600.jpg?image=252" class="img-fluid">
-            </a>
-            <a href="https://unsplash.it/1200/768.jpg?image=253" data-toggle="lightbox" data-gallery="example-gallery" class="col-sm-4">
-                <img src="https://unsplash.it/600.jpg?image=253" class="img-fluid">
-            </a>
-        </div>
-        <div class="row">
-            <a href="https://unsplash.it/1200/768.jpg?image=254" data-toggle="lightbox" data-gallery="example-gallery" class="col-sm-4">
-                <img src="https://unsplash.it/600.jpg?image=254" class="img-fluid">
-            </a>
-            <a href="https://unsplash.it/1200/768.jpg?image=255" data-toggle="lightbox" data-gallery="example-gallery" class="col-sm-4">
-                <img src="https://unsplash.it/600.jpg?image=255" class="img-fluid">
-            </a>
-            <a href="https://unsplash.it/1200/768.jpg?image=256" data-toggle="lightbox" data-gallery="example-gallery" class="col-sm-4">
-                <img src="https://unsplash.it/600.jpg?image=256" class="img-fluid">
-            </a>
-        </div>
-    </div>
-</div-->
 
 
 <script>

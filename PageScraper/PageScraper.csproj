@@ -182,8 +182,13 @@
     <Content Include="Assets\vendor\jquery\jquery.min.js" />
     <Content Include="Assets\vendor\jquery\jquery.slim.js" />
     <Content Include="Assets\vendor\jquery\jquery.slim.min.js" />
+    <Content Include="Assets\vendor\photoswipe\loadSwipe.js" />
+    <Content Include="Assets\vendor\photoswipe\photoswipe-ui-default.min.js" />
+    <Content Include="Assets\vendor\photoswipe\photoswipe.min.js" />
+    <Content Include="Assets\vendor\photoswipe\scripts.js" />
     <Content Include="Content\agency.css" />
     <Content Include="Content\agency.min.css" />
+    <Content Include="Content\ajax-spinner.gif" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
@@ -273,6 +278,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\main.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />

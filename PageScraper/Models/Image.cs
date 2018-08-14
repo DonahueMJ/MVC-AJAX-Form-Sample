@@ -7,6 +7,8 @@ namespace PageScraper.Models
     public class Image
     {
         public string Url { get; set; }
+        public int height { get; set; }
+        public int width { get; set; }
         public string Title { get; set; }
     }
 }

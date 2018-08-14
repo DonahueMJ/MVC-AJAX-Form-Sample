@@ -3,6 +3,7 @@ using PageScraper.Models;
 using PageScraper.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -24,7 +25,8 @@ namespace PageScraper.Business
 
                     HtmlDocument document = new HtmlDocument();
                     document.LoadHtml(source);
-                    results.Images = getImages(document);
+                    results.Uri = new Uri(url);
+                    results.Images = getImages(document, webClient, results.Uri);
                     var wordStats = getWordStats(document);
                     var wordCount = wordStats.Sum(stat => stat.Count);
 
@@ -46,14 +48,38 @@ namespace PageScraper.Business
             return results;
         }
 
-        private List<Image> getImages(HtmlDocument pageSource)
+        private List<Image> getImages(HtmlDocument pageSource, WebClient client, Uri requestUri)
         {
             var images = pageSource.DocumentNode.Descendants("img")
-                                .Select(e => new Image { Url = e.GetAttributeValue("src", null), Title = e.GetAttributeValue("alt", null) })
+                                .Select(e => SetImageProperties(e, client, requestUri))
                                 .Where(s => !String.IsNullOrEmpty(s.Url)).ToList();
 
             return images;
 
+        }
+
+        private Image SetImageProperties(HtmlNode image, WebClient client, Uri requestUri)
+        {
+            var imagePath = image.GetAttributeValue("src", null);
+            var imageUrl = string.Empty;
+            if (imagePath != null)
+            {
+                imageUrl = (imagePath.StartsWith("/") && !imagePath.StartsWith("//")) ? requestUri.GetLeftPart(UriPartial.Authority) + imagePath : imagePath;
+            }
+            
+            byte[] imageData = client.DownloadData(imageUrl);
+            MemoryStream imgStream = new MemoryStream(imageData);
+            System.Drawing.Image img = System.Drawing.Image.FromStream(imgStream);
+
+            int wSize = img.Width;
+            int hSize = img.Height;
+            return new Image
+            {
+                Url = imageUrl,
+                Title = image.GetAttributeValue("alt", null),
+                height = hSize,
+                width = wSize
+            };
         }
 
 
@@ -91,17 +117,24 @@ namespace PageScraper.Business
                     img.Remove();
                 }
 
+                var styles = pageSource.DocumentNode.SelectNodes("//link");
+                foreach (var style in styles)
+                {
+                    style.Remove();
+                }
+
+                var scripts = pageSource.DocumentNode.SelectNodes("//script");
+                foreach (var script in scripts)
+                {
+                    script.Remove();
+                }
+
                 content = pageSource.DocumentNode.OuterHtml;
 
-                //clean opening html tags
-                //Remove CSS styles, if any found
-                content = Regex.Replace(content, "<style(.| )*?>*</style>", "");
-                //Remove script blocks
-                content = Regex.Replace(content, @"<script[^>]*>[\s\S]*?</script>", "");
-                // Remove all images
                 // Remove all HTML tags, leaving on the text inside.
                 content = Regex.Replace(content, "<(.| )*?>", "");
                 content = Regex.Replace(content, "&amp;", "");
+                content = Regex.Replace(content, "&nbsp;", "");
                 content = Regex.Replace(content, @"[^a-zA-Z\s]+", "");
                 // Remove all extra spaces, tabs and repeated line-breaks
                 content = Regex.Replace(content, "(x09)?", "");

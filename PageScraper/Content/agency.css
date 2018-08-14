@@ -58,7 +58,32 @@ element.style {
     box-sizing: border-box;
 }
 
-.ekko-lightbox-nav-overlay {
-    font-size: 50px;
-    text-shadow: 7px 2px #888888;
+.pswp__caption__center {
+    text-align: center;
+}
+
+figure {
+    display: inline-block;
+    float: left;
+}
+
+.spacer {
+    height: 5em;
+}
+
+.card{
+    height:100%;
+}
+
+img-fluid {
+
+}
+
+.gallery .row {
+    margin: 20px 0;
+}
+
+div#loading {
+    display: none;
+    text-align: center;
 }

@@ -1,0 +1,3 @@
+﻿function onSubmitBegin() {
+    $('#logbtn').hide();
+}
