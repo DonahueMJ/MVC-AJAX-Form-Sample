@@ -40,7 +40,7 @@
     <h2>Scraped images</h2>
 
                 <!-- Galley wrapper that contains all items -->
-                <div id="gallery" class="gallery" itemscope itemtype="http://schema.org/ImageGallery">
+                <div id="gallery" class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
                     <div class="row">
                         @foreach (var image in Model.Images)
                         {
@@ -68,33 +68,8 @@
                     </div>
                 </div>
 
-    <!-- Some spacing 😉 -->
     <div class="spacer"></div>
-    @*<div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="row">
-                    @foreach (var image in Model.Images)
-                    {
-                        if (imageCounter != 0 && imageCounter % 3 == 0)
-                        {
-                        @:</div>
-                        @:<div class="row">
-                        }
 
-                        var imageUrl = (image.Url.StartsWith("/") && !image.Url.StartsWith("//")) ? Model.Uri.GetLeftPart(UriPartial.Authority) + image.Url : image.Url;
-                        <div class="col-md-4">
-                            <div class="card mb-4 shadow-sm">
-                                <a href="@imageUrl" title="@image.Title" data-toggle="lightbox" data-gallery="scraped-gallery">
-                                    <img src="@imageUrl" alt="@image.Title" class="img-fluid">
-                                </a>
-                            </div>
-                        </div>
-                        imageCounter++;
-                    }
-
-                </div>
-            </div>
-        </div>*@
 </section>
 
 
@@ -105,7 +80,7 @@
         data: {
             labels: ["@Model.WordStats[0].Name", "@Model.WordStats[1].Name", "@Model.WordStats[2].Name", "@Model.WordStats[3].Name", "@Model.WordStats[4].Name", "@Model.WordStats[5].Name", "@Model.WordStats[6].Name", "@Model.WordStats[7].Name", "@Model.WordStats[8].Name", "@Model.WordStats[9].Name"],
             datasets: [{
-                label: '# of Votes',
+                label: '# of Words',
                 data: [@Model.WordStats[0].Count, @Model.WordStats[1].Count, @Model.WordStats[2].Count, @Model.WordStats[3].Count, @Model.WordStats[4].Count, @Model.WordStats[5].Count, @Model.WordStats[6].Count, @Model.WordStats[7].Count, @Model.WordStats[8].Count, @Model.WordStats[9].Count],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',

@@ -11,6 +11,12 @@ namespace PageScraper.Controllers
 {
     public class ScrapeController : Controller
     {
+        private IPageBuilder _pageBuilder;
+
+        public ScrapeController(IPageBuilder pageBuilder)
+        {
+            _pageBuilder = pageBuilder;
+        }
         // GET: Scrape
         public ActionResult _Request()
         {
@@ -23,9 +29,7 @@ namespace PageScraper.Controllers
         {
             if (ModelState.IsValid)
             {
-                var pb = new PageBuilder();
-
-                var model = pb.GetDataFromUrl(request.PageUrl);
+                var model = _pageBuilder.GetDataFromUrl(request.PageUrl);
 
                 return PartialView("_Request", model);
             }

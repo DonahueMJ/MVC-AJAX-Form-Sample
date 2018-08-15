@@ -47,6 +47,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.8.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.8.1\lib\net45\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Integration.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.Mvc5.4.0.2\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.8.6.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.8.6\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
@@ -151,7 +157,9 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\IocConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Business\IPageBuilder.cs" />
     <Compile Include="Business\PageBuilder.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -159,7 +167,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Interfaces\IImage.cs" />
     <Compile Include="Models\Image.cs" />
+    <Compile Include="Models\Interfaces\IPage.cs" />
+    <Compile Include="Models\Interfaces\IWordStat.cs" />
     <Compile Include="Models\Page.cs" />
     <Compile Include="Models\WordStat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -185,7 +196,6 @@
     <Content Include="Assets\vendor\photoswipe\loadSwipe.js" />
     <Content Include="Assets\vendor\photoswipe\photoswipe-ui-default.min.js" />
     <Content Include="Assets\vendor\photoswipe\photoswipe.min.js" />
-    <Content Include="Assets\vendor\photoswipe\scripts.js" />
     <Content Include="Content\agency.css" />
     <Content Include="Content\agency.min.css" />
     <Content Include="Content\ajax-spinner.gif" />

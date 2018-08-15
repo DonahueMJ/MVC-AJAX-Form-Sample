@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PageScraper.Models
 {
-    public class Page
+    public class Page : IPage
     {
         public string PageUrl { get; set; }
         public Uri Uri { get; set; }

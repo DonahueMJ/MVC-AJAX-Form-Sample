@@ -5,7 +5,7 @@ using System.Web;
 
 namespace PageScraper.Models
 {
-    public class WordStat
+    public class WordStat : IWordStat
     {
         public string Name { get; set; }
         public int Count { get; set; }

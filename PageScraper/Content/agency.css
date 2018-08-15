@@ -73,14 +73,15 @@ figure {
 
 .card{
     height:100%;
+    padding-top:25px;
 }
 
 img-fluid {
 
 }
 
-.gallery .row {
-    margin: 20px 0;
+.my-gallery .row {
+    margin-bottom: 20px;
 }
 
 div#loading {

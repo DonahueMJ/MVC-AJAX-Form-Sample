@@ -49,6 +49,8 @@ C:\d\playground\PageCrawler\PageScraper\bin\roslyn\vbc.rsp
 C:\d\playground\PageCrawler\PageScraper\bin\roslyn\VBCSCompiler.exe
 C:\d\playground\PageCrawler\PageScraper\bin\roslyn\VBCSCompiler.exe.config
 C:\d\playground\PageCrawler\PageScraper\bin\Antlr3.Runtime.dll
+C:\d\playground\PageCrawler\PageScraper\bin\Autofac.dll
+C:\d\playground\PageCrawler\PageScraper\bin\Autofac.Integration.Mvc.dll
 C:\d\playground\PageCrawler\PageScraper\bin\HtmlAgilityPack.dll
 C:\d\playground\PageCrawler\PageScraper\bin\Microsoft.AI.Agent.Intercept.dll
 C:\d\playground\PageCrawler\PageScraper\bin\Microsoft.AI.DependencyCollector.dll
@@ -70,6 +72,8 @@ C:\d\playground\PageCrawler\PageScraper\bin\System.Web.WebPages.Deployment.dll
 C:\d\playground\PageCrawler\PageScraper\bin\System.Web.WebPages.dll
 C:\d\playground\PageCrawler\PageScraper\bin\System.Web.WebPages.Razor.dll
 C:\d\playground\PageCrawler\PageScraper\bin\WebGrease.dll
+C:\d\playground\PageCrawler\PageScraper\bin\Autofac.xml
+C:\d\playground\PageCrawler\PageScraper\bin\Autofac.Integration.Mvc.xml
 C:\d\playground\PageCrawler\PageScraper\bin\HtmlAgilityPack.pdb
 C:\d\playground\PageCrawler\PageScraper\bin\HtmlAgilityPack.xml
 C:\d\playground\PageCrawler\PageScraper\bin\System.Web.Helpers.xml

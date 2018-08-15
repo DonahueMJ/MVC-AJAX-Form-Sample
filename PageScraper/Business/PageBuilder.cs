@@ -11,7 +11,7 @@ using System.Web;
 
 namespace PageScraper.Business
 {
-    public class PageBuilder
+    public class PageBuilder : IPageBuilder
     {
         public ScrapedResults GetDataFromUrl(string url)
         {
